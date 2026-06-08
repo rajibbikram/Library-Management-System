@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class logindao {
     public String dologin(Connection conn,String userName, String password) throws SQLException {
-        String query = "select * from login where user_name = ? and password = ?";
+        String query = "select * from login where username = ? and password = ?";
 
         try(PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, userName);
@@ -15,7 +15,7 @@ public class logindao {
 
             try (ResultSet rs = ps.executeQuery()){
                  if(rs.next()) {
-                     return rs.getString("user type");
+                     return rs.getString("userType");
                  }
             }
         }
