@@ -42,4 +42,37 @@ public class BookService {
             System.out.println(e.getMessage());
         }
     }
+
+    public void addBook(Connection conn) throws SQLException {
+        System.out.print("Enter Serial No of Book:");
+        int srNo = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("Enter Book Name:");
+        String bookName = sc.nextLine();
+
+        System.out.print("Enter Author of book:");
+        String authorName = sc.nextLine();
+
+        System.out.print("Enter Qty of book:");
+        int qty = sc.nextInt();
+
+        bookDao dao = new bookDao();
+        Book book = dao.getBooksBySnoOrBookName(conn,authorName,srNo);
+
+        if(book != null){
+            System.out.println("Book details exist into our system. Please save  with other book!");
+            return;
+        }
+
+        Book input = new Book();
+        input.setSrNo(srNo);
+        input.setBookName(bookName);
+        input.setAuthorName(authorName);
+        input.setBookQty(qty);
+
+
+        dao.saveBook(conn, input);
+
+    }
 }

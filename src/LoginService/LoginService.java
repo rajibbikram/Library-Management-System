@@ -27,9 +27,9 @@ public class LoginService {
                return;
            }
            System.out.println("Login Success. You logged in as a " +userType+". Please Select from below option");
-           displayAdminmenu(conn);
-           if (userType.equals("admin")){
 
+           if (userType != null && userType.trim().equalsIgnoreCase("admin")) {
+               displayAdminmenu(conn);
            } else {
 
            }
@@ -54,11 +54,11 @@ public class LoginService {
 
            switch (choice){
                case 1:
-                   System.out.println("1. Search a Book!.");
                    searchBook(conn);
                    break;
                case 2:
-                   System.out.println("2. Add a New Book!.");
+                   BookService bookService = new BookService();
+                   bookService.addBook(conn);
                    break;
                case 3:
                    System.out.println("3. Upgrade Quantity of book!.");
