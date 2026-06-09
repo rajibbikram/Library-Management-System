@@ -38,6 +38,7 @@ public class LoginService {
 
    public void displayAdminmenu(Connection conn) throws SQLException {
        int choice;
+       BookService bookService = new BookService();
        do {
            System.out.println("===============================");
            System.out.println("1. Search a Book!.");
@@ -57,14 +58,13 @@ public class LoginService {
                    searchBook(conn);
                    break;
                case 2:
-                   BookService bookService = new BookService();
                    bookService.addBook(conn);
                    break;
                case 3:
                    System.out.println("3. Upgrade Quantity of book!.");
                    break;
                case 4:
-                   System.out.println("4. Show All book!.");
+                   bookService.getAllBooks(conn);
                    break;
                case 5:
                    System.out.println("5. Register Student!.");

@@ -5,6 +5,7 @@ import dao.bookDao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class BookService {
@@ -64,15 +65,35 @@ public class BookService {
             System.out.println("Book details exist into our system. Please save  with other book!");
             return;
         }
-
         Book input = new Book();
         input.setSrNo(srNo);
         input.setBookName(bookName);
         input.setAuthorName(authorName);
         input.setBookQty(qty);
 
-
         dao.saveBook(conn, input);
 
     }
+    public void getAllBooks(Connection conn) throws SQLException {
+
+        bookDao dao = new bookDao();
+
+        List<Book> books = dao.getAllBooks(conn);
+
+        System.out.println("+------+----------------------+----------------------+------+\n");
+        System.out.printf("| %-4s | %-20s | %-20s | %-4s |\n",
+                "SrNo", "Book Name", "Author", "Qty");
+        System.out.println("+------+----------------------+----------------------+------+\n");
+        for (Book book : books) {
+
+            System.out.printf("| %-4d | %-20s | %-20s | %-4d |\n",
+                    book.getSrNo(),
+                    book.getBookName(),
+                    book.getAuthorName(),
+                    book.getBookQty());
+        }
+        System.out.println("+------+----------------------+----------------------+------+\n");
+    }
+
+
 }

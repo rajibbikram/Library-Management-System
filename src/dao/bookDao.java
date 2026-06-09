@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class bookDao {
     public Book getBookBySno(Connection conn, int srNo) throws SQLException{
@@ -95,5 +97,30 @@ public class bookDao {
             }
         }
     }
+
+    public List<Book> getAllBooks(Connection conn) throws SQLException {
+
+        String query = "SELECT * FROM books";
+        List<Book> books = new ArrayList<>();
+
+        try (PreparedStatement ps = conn.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Book book = new Book();
+
+                book.setId(rs.getInt("id"));
+                book.setSrNo(rs.getInt("sr_no"));
+                book.setBookName(rs.getString("name"));
+                book.setAuthorName(rs.getString("author_name"));
+                book.setBookQty(rs.getInt("qty"));
+
+                books.add(book);
+            }
+        }
+
+        return books;
+    }
+
 
 }
