@@ -122,5 +122,23 @@ public class bookDao {
         return books;
     }
 
+    public void updateBookQty(Connection conn, Book book) throws SQLException {
+
+        String query = "UPDATE books SET qty = ? WHERE sr_no = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, book.getBookQty());
+            ps.setInt(2, book.getSrNo());
+
+            int rows = ps.executeUpdate();
+
+            if(rows > 0) {
+                System.out.println("Book Update SuccesFully!.");
+            } else  {
+                System.out.println("Failed to Update book!.");
+            }
+        }
+    }
 
 }

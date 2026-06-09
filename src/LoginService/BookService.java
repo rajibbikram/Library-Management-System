@@ -74,26 +74,54 @@ public class BookService {
         dao.saveBook(conn, input);
 
     }
+
+
     public void getAllBooks(Connection conn) throws SQLException {
 
         bookDao dao = new bookDao();
 
         List<Book> books = dao.getAllBooks(conn);
 
-        System.out.println("+------+----------------------+----------------------+------+\n");
-        System.out.printf("| %-4s | %-20s | %-20s | %-4s |\n",
-                "SrNo", "Book Name", "Author", "Qty");
-        System.out.println("+------+----------------------+----------------------+------+\n");
+        System.out.println("+------+--------+----------------------+----------------------+------+\n");
+        System.out.printf("| %-4s | %-6s | %-20s | %-20s | %-4s |\n",
+                "ID", "SrNo", "Book Name", "Author", "Qty");
+        System.out.println("+------+--------+----------------------+----------------------+------+\n");
+
         for (Book book : books) {
 
-            System.out.printf("| %-4d | %-20s | %-20s | %-4d |\n",
+            System.out.printf("| %-4d | %-6d | %-20s | %-20s | %-4d |\n",
+                    book.getId(),
                     book.getSrNo(),
                     book.getBookName(),
                     book.getAuthorName(),
                     book.getBookQty());
         }
-        System.out.println("+------+----------------------+----------------------+------+\n");
+
+        System.out.println("+------+--------+----------------------+----------------------+------+\n");
     }
 
+    public void updateBookQty(Connection conn) throws SQLException {
 
+        System.out.println("Enter Serial No of Book.");
+        int srNo = sc.nextInt();
+
+        bookDao dao = new bookDao();
+        Book book = dao.getBookBySno(conn, srNo);
+
+        if (book == null) {
+            System.out.println("Book is not available.");
+            return;
+        }
+
+        System.out.println("Current Quantity: " + book.getBookQty());
+
+        System.out.println("Enter No of books to be Added:");
+        int qty = sc.nextInt();
+
+        book.setBookQty(book.getBookQty() + qty);
+
+        dao.updateBookQty(conn, book);
+
+        System.out.println("Book quantity updated successfully.");
+    }
 }

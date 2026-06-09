@@ -61,7 +61,7 @@ public class LoginService {
                    bookService.addBook(conn);
                    break;
                case 3:
-                   System.out.println("3. Upgrade Quantity of book!.");
+                   bookService.updateBookQty(conn);
                    break;
                case 4:
                    bookService.getAllBooks(conn);
