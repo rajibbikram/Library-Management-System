@@ -2,6 +2,7 @@ package LoginService;
 
 import dao.DatabaseService;
 import dao.logindao;
+import userDao.User;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -67,13 +68,15 @@ public class LoginService {
                    bookService.getAllBooks(conn);
                    break;
                case 5:
-                   System.out.println("5. Register Student!.");
+                   registerUser(conn);
                    break;
                case 6:
-                   System.out.println("6. Show All Register Student!.");
+                   logindao dao = new logindao();
+                   dao.getAllUsers(conn);
                    break;
                case 7:
-                   System.out.println("7. Exit From Application!.");
+                   System.out.println("Exiting application... Goodbye!");
+                   System.exit(0);
                    break;
                default:
                    System.out.println("Invalid chocing number!");
@@ -106,6 +109,30 @@ public class LoginService {
         }
 
     }
+
+    public void registerUser(Connection conn) throws SQLException {
+
+        Scanner sc = new Scanner(System.in);
+
+        User user = new User();
+
+        System.out.print("Enter Username: ");
+        String username = sc.nextLine();
+
+        System.out.print("Enter Password: ");
+        String password = sc.nextLine();
+
+        System.out.print("Enter User Type (Admin/User): ");
+        String userType = sc.nextLine();
+
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setUserType(userType);
+
+        logindao dao = new logindao();
+        dao.registerUser(conn, user);
+    }
 }
+
 
 
